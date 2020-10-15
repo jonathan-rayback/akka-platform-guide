@@ -76,7 +76,7 @@ ifdef::review[REVIEWERS: in the new UI template that we will have soon, each pag
 
 == Configuring for local development
 
-By default, when using [.group-scala]#`sbt run`# [.group-java]#`mvn exec:exec`# the `Main` class will start an `ActorSystem` with the default `application.conf` which is the configuration intended to be used in production. When running locally you must override the configuration by using one the provided local configurations. Those local configuration properties are placed in the `local1.conf` file, and you can run the application with this configuration with:
+By default, when using [.group-scala]#`sbt run`# [.group-java]#`mvn exec:exec`# the `Main` class will start an `ActorSystem` with the default `application.conf` which is the configuration intended to be used in production. When running it locally you must override the configuration by using one the provided local configurations files. You can override the configuration by passing one of the local file configurations to the build tool using a `-D` option.
 
 [.group-java]
 [source,shell script]
