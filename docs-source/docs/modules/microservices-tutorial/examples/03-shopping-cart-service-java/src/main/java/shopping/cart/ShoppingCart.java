@@ -144,6 +144,7 @@ public final class ShoppingCart extends EventSourcedBehaviorWithEnforcedReplies<
     /**
      * A command to checkout the shopping cart.
      */
+    // tag::checkoutCommand[]
     public static final class Checkout implements Command {
         final ActorRef<StatusReply<Summary>> replyTo;
         @JsonCreator
@@ -151,10 +152,12 @@ public final class ShoppingCart extends EventSourcedBehaviorWithEnforcedReplies<
             this.replyTo = replyTo;
         }
     }
+    // end::checkoutCommand[]
 
     /**
      * A command to get the current state of the shopping cart.
      */
+    // tag::getCommand[]
     public static final class Get implements Command {
         final ActorRef<Summary> replyTo;
         @JsonCreator
@@ -162,6 +165,7 @@ public final class ShoppingCart extends EventSourcedBehaviorWithEnforcedReplies<
             this.replyTo = replyTo;
         }
     }
+    // end::getCommand[]
 
     /**
      * Summary of the shopping cart state, used in reply messages.
@@ -258,6 +262,7 @@ public final class ShoppingCart extends EventSourcedBehaviorWithEnforcedReplies<
         }
     }
 
+    // tag::checkedOutEvent[]
     final static class CheckedOut extends Event {
         final Instant eventTime;
         public CheckedOut(String cartId, Instant eventTime) {
@@ -278,6 +283,7 @@ public final class ShoppingCart extends EventSourcedBehaviorWithEnforcedReplies<
             return Objects.hash(eventTime);
         }
     }
+    // end::checkedOutEvent[]
 
     final static EntityTypeKey<Command> ENTITY_KEY = EntityTypeKey.create(Command.class, "ShoppingCart");
 

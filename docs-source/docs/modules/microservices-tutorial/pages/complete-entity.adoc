@@ -11,8 +11,8 @@ On this page you will learn how to:
 
 .Available .zip downloads:
 ****
-* link:_attachments/2-shopping-cart-event-sourced-scala.zip[Source] that includes all previous tutorial steps and allows you to start with the steps on this page.
-* link:_attachments/3-shopping-cart-event-sourced-complete-scala.zip[Source] with the steps on this page completed.
+* [.group-scala]#link:_attachments/2-shopping-cart-event-sourced-scala.zip[Source]# [.group-java]#link:_attachments/2-shopping-cart-event-sourced-java.zip[Source]# that includes all previous tutorial steps and allows you to start with the steps on this page.
+* [.group-scala]#link:_attachments/3-shopping-cart-event-sourced-complete-scala.zip[Source]# [.group-java]#link:_attachments/3-shopping-cart-event-sourced-complete-java.zip[Source]# with the steps on this page completed.
 ****
 
 == More commands and events
@@ -51,7 +51,7 @@ Java::
 +
 [source,java,indent=0]
 ----
-TODO
+include::example$03-shopping-cart-service-java/src/main/java/shopping/cart/ShoppingCart.java[tag=checkoutCommand]
 ----
 
 Scala::
@@ -68,7 +68,7 @@ Java::
 +
 [source,java,indent=0]
 ----
-TODO
+include::example$03-shopping-cart-service-java/src/main/java/shopping/cart/ShoppingCart.java[tag=checkedOutEvent]
 ----
 
 Scala::
@@ -85,7 +85,7 @@ Java::
 +
 [source,java,indent=0]
 ----
-TODO
+include::example$03-shopping-cart-service-java/src/main/java/shopping/cart/ShoppingCart.java[tag=state]
 ----
 
 Scala::
@@ -95,14 +95,14 @@ Scala::
 include::example$03-shopping-cart-service-scala/src/main/scala/shopping/cart/ShoppingCart.scala[tag=state]
 ----
 
-Add unit test for the new `Checkout` command in `ShoppingCartSpec`:
+Add unit test for the new `Checkout` command in [.group-scala]#`ShoppingCartSpec`# [.group-java]#`ShoppingCartTest`#:
 
 [.tabset]
 Java::
 +
 [source,java,indent=0]
 ----
-TODO
+include::example$03-shopping-cart-service-java/src/test/java/shopping/cart/ShoppingCartTest.java[tag=checkout]
 ----
 
 Scala::
@@ -112,14 +112,15 @@ Scala::
 include::example$03-shopping-cart-service-scala/src/test/scala/shopping/cart/ShoppingCartSpec.scala[tag=checkout]
 ----
 
-Commands should be handled differently when the cart has been checked out. `AddItem` is no longer allowed after checkout. Therefore we refactor the `handleCommand` method to two separate methods `openShoppingCart` and `checkedOutShoppingCart` that are used depending on the `checkedOut` state. The previous code for `AddItem` goes into the `openShoppingCart` method.
+Commands should be handled differently when the cart has been checked out. `AddItem` is no longer allowed after checkout. Therefore, we refactor the `handleCommand` method to two separate methods `openShoppingCart` and `checkedOutShoppingCart` that are used depending on the `checkedOut` state. The previous code for `AddItem` goes into the `openShoppingCart` method.
 
 [.tabset]
 Java::
 +
 [source,java,indent=0]
 ----
-TODO
+FIXME
+include::example$03-shopping-cart-service-java/src/main/java/shopping/cart/ShoppingCart.java[tag=commandHandlers]
 ----
 
 Scala::
@@ -136,7 +137,8 @@ Java::
 +
 [source,java,indent=0]
 ----
-TODO
+FIXME
+include::example$03-shopping-cart-service-java/src/main/java/shopping/cart/ShoppingCart.java[tag=checkoutCommandHandler]
 ----
 
 Scala::
@@ -153,7 +155,7 @@ Java::
 +
 [source,java,indent=0]
 ----
-TODO
+include::example$03-shopping-cart-service-java/src/main/java/shopping/cart/ShoppingCart.java[tag=checkedOutShoppingCart]
 ----
 
 Scala::
@@ -170,7 +172,7 @@ Java::
 +
 [source,java,indent=0]
 ----
-TODO
+include::example$03-shopping-cart-service-java/src/main/java/shopping/cart/ShoppingCart.java[tag=checkedOutEventHandler]
 ----
 
 Scala::
@@ -182,9 +184,16 @@ include::example$03-shopping-cart-service-scala/src/main/scala/shopping/cart/Sho
 
 That should cover everything for the `Checkout` command. Let's confirm by running the unit tests with:
 
+[.group-scala]
 [source,shell script]
 ----
 sbt test
+----
+
+[.group-java]
+[source,shell script]
+----
+mvn test
 ----
 
 === Add Get command
@@ -196,7 +205,7 @@ Java::
 +
 [source,java,indent=0]
 ----
-TODO
+include::example$03-shopping-cart-service-java/src/main/java/shopping/cart/ShoppingCart.java[tag=getCommand]
 ----
 
 Scala::
@@ -213,7 +222,7 @@ Java::
 +
 [source,java,indent=0]
 ----
-TODO
+include::example$03-shopping-cart-service-java/src/test/java/shopping/cart/ShoppingCartTest.java[tag=get]
 ----
 
 Scala::
@@ -230,7 +239,7 @@ Java::
 +
 [source,java,indent=0]
 ----
-TODO
+include::example$03-shopping-cart-service-java/src/main/java/shopping/cart/ShoppingCart.java[tag=getCommandHandler]
 ----
 
 Scala::
@@ -242,9 +251,17 @@ include::example$03-shopping-cart-service-scala/src/main/scala/shopping/cart/Sho
 
 Try the new `Get` command  by running the unit tests with:
 
+
+[.group-scala]
 [source,shell script]
 ----
 sbt test
+----
+
+[.group-java]
+[source,shell script]
+----
+mvn test
 ----
 
 == Add to ShoppingCartService
@@ -263,19 +280,27 @@ include::example$03-shopping-cart-service-scala/src/main/protobuf/ShoppingCartSe
 
 Generate code by compiling the project:
 
+
+[.group-scala]
 [source,shell script]
 ----
 sbt compile
 ----
 
-You will see a compilation error in `ShoppingCartServiceImpl.scala`, but that is expected with the changed Protobuf definition. We will fix that now. You have to include the new `checkedOut` flag when converting from `ShoppingCart.Summary` to `proto.Cart`.
+[.group-java]
+[source,shell script]
+----
+mvn compile
+----
+
+You will see a compilation error in [.group-scala]#`ShoppingCartServiceImpl.scala`# [.group-java]#`ShoppingCartServiceImpl.java`#, but that is expected with the changed Protobuf definition. We will fix that now. You have to include the new `checkedOut` flag when converting from `ShoppingCart.Summary` to `proto.Cart`.
 
 [.tabset]
 Java::
 +
 [source,java,indent=0]
 ----
-TODO
+include::example$03-shopping-cart-service-java/src/main/java/shopping/cart/ShoppingCartServiceImpl.java[tag=toProtoCart]
 ----
 
 Scala::
@@ -292,7 +317,7 @@ Java::
 +
 [source,java,indent=0]
 ----
-TODO
+include::example$03-shopping-cart-service-java/src/main/java/shopping/cart/ShoppingCartServiceImpl.java[tag=checkoutAndGet]
 ----
 
 Scala::
@@ -315,10 +340,19 @@ docker-compose up -d
 
 Run the service with:
 
+[.group-scala]
 [source,shell script]
 ----
 sbt -Dconfig.resource=local1.conf run
 ----
+
+[.group-java]
+[source,shell script]
+----
+# make sure to compile before running exec:exec
+mvn compile exec:exec -DAPP_CONFIG=local1.conf
+----
+
 
 Try it with `grpcurl`.
 
